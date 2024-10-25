@@ -28,6 +28,11 @@ namespace ThriffSignUp.View
             // Navigate to LoginView
             (Application.Current.MainWindow as MainWindow)?.NavigateToLoginPage();
         }
+
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 
