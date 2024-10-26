@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace WPF_LoginForm.View
 {
@@ -45,5 +46,7 @@ namespace WPF_LoginForm.View
         {
             this.WindowState = WindowState.Minimized;
         }
+        
+
     }
 }

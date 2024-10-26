@@ -30,6 +30,14 @@ namespace ThriffSignUp.View
             // Navigate to LoginView
             (Application.Current.MainWindow as MainWindow)?.NavigateToLoginPage();
         }
+        private void btnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
 
