@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace ThriffSignUp.View
 {
-    public partial class WelcomeView : Page
+    public partial class WelcomeView : Window
     {
         public WelcomeView()
         {
@@ -23,15 +23,12 @@ namespace ThriffSignUp.View
         }
 
         // Event handler for the Next button
-        private void NextButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Navigate to LoginView
-            (Application.Current.MainWindow as MainWindow)?.NavigateToLoginPage();
-        }
+
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-
+            // Navigate to LoginView
+            (Application.Current.MainWindow as MainWindow)?.NavigateToLoginPage();
         }
     }
 }
