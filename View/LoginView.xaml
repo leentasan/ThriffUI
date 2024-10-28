@@ -1,15 +1,10 @@
-﻿<Window x:Class="ThriffSignUp.View.LoginView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        Title="LoginView" Height="550" Width="800"
-        WindowStyle="None"
-        ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen"
-        Background="Transparent"
-        AllowsTransparency="True">
+﻿<UserControl x:Class="ThriffSignUp.View.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Height="550" Width="800">
 
     <Border CornerRadius="12" BorderBrush="Gray" BorderThickness="1">
         <Border CornerRadius="10" BorderThickness="2" Opacity="0.95">
@@ -51,14 +46,15 @@
 
                     <!-- Minimize and Close Buttons -->
                     <Button x:Name="btnMinimize"
-                            BorderThickness="0"
-                            Content="-"
-                            Foreground="White"
-                            FontSize="16"
-                            FontFamily="Montserrat"
-                            Cursor="Hand"
-                            Grid.Column="1"
-                            Click="btnMinimize_Click">
+        BorderThickness="0"
+        Content="-"
+        Foreground="White"
+        FontSize="16"
+        FontFamily="Montserrat"
+        Cursor="Hand"
+        Grid.Column="1"
+        IsEnabled="False">
+                        <!-- Disable the button -->
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Background" Value="#FFA310"/>
@@ -72,7 +68,7 @@
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border Width="18" Height="18" CornerRadius="9"
-                                        Background="{TemplateBinding Background}">
+                    Background="{TemplateBinding Background}">
                                     <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Border>
                             </ControlTemplate>
@@ -80,14 +76,15 @@
                     </Button>
 
                     <Button x:Name="btnClose"
-                            BorderThickness="0"
-                            Content="X"
-                            Foreground="White"
-                            FontSize="12"
-                            FontFamily="Montserrat"
-                            Cursor="Hand"
-                            Grid.Column="2"
-                            Click="btnClose_Click">
+        BorderThickness="0"
+        Content="X"
+        Foreground="White"
+        FontSize="12"
+        FontFamily="Montserrat"
+        Cursor="Hand"
+        Grid.Column="2"
+        IsEnabled="False">
+                        <!-- Disable the button -->
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Background" Value="#558984"/>
@@ -101,12 +98,13 @@
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border Width="18" Height="18" CornerRadius="9"
-                                        Background="{TemplateBinding Background}">
+                    Background="{TemplateBinding Background}">
                                     <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Border>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
+
                 </Grid>
 
                 <!-- Login Form Section -->
@@ -173,4 +171,4 @@
             </Grid>
         </Border>
     </Border>
-</Window>
+</UserControl>

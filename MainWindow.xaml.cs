@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System;
+using ThriffSignUp.View;
 
 namespace ThriffSignUp
 {
@@ -34,6 +35,19 @@ namespace ThriffSignUp
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to load LoginView: {ex.Message}");
+            }
+        }
+
+        public void NavigateToSignUpPage()
+        {
+            try
+            {
+                var signUpView = new View.SignUpView();
+                this.Content = signUpView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load SignUpView: {ex.Message}");
             }
         }
     }

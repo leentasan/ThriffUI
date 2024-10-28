@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using Npgsql;
 
 namespace ThriffSignUp.View
 {
-    public partial class LoginView : Window
+    public partial class LoginView : UserControl
     {
-        private NpgsqlConnection conn;
-        private string connstring = "Host=localhost; Port:5432; Username=postgres ; Password:della2908 ; Database:thriff ";
+        private readonly NpgsqlConnection conn;
+        private readonly string connstring = "Host=localhost;Port=5432;Username=postgres;Password=della2908;Database=thriff";
 
         public LoginView()
         {
@@ -24,26 +25,27 @@ namespace ThriffSignUp.View
             {
                 conn.Open();
                 string query = "SELECT COUNT(*) FROM users WHERE username = @username AND password = @password";
+
                 using (var cmd = new NpgsqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("username", username);
                     cmd.Parameters.AddWithValue("password", password);
 
-                    int result = (int)cmd.ExecuteScalar();
+                    int result = Convert.ToInt32(cmd.ExecuteScalar());
                     if (result > 0)
                     {
                         MessageBox.Show("Login Successful");
-                        // Lakukan pengalihan halaman jika login berhasil
+                        // Tambahkan navigasi jika login berhasil
                     }
                     else
                     {
-                        MessageBox.Show("Login Failed");
+                        MessageBox.Show("Login Failed. Please check your credentials.");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                MessageBox.Show("Error: " + ex.Message, "Database Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {
@@ -53,19 +55,7 @@ namespace ThriffSignUp.View
 
         private void GoToSignUp(object sender, RoutedEventArgs e)
         {
-            SignUpView signUpView = new SignUpView();
-            signUpView.Show();
-            this.Close();
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnMinimize_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
+            (Application.Current.MainWindow as MainWindow)?.NavigateToSignUpPage();
         }
     }
 }

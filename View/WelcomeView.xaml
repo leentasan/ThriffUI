@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:ThriffSignUp.View"
              mc:Ignorable="d"
-             Height="450" Width="800">
+             Height="550" Width="800">
    
  <!-- Outer Border with rounded corners -->
     <Border CornerRadius="12" Background="White" BorderThickness="2"
