@@ -24,7 +24,7 @@ namespace ThriffSignUp.View
             try
             {
                 conn.Open();
-                string query = "SELECT COUNT(*) FROM users WHERE username = @username AND password = @password";
+                string query = "SELECT COUNT(*) FROM buyer WHERE username = @username AND password = @password";
 
                 using (var cmd = new NpgsqlCommand(query, conn))
                 {
@@ -35,7 +35,6 @@ namespace ThriffSignUp.View
                     if (result > 0)
                     {
                         MessageBox.Show("Login Successful");
-                        // Tambahkan navigasi jika login berhasil
                     }
                     else
                     {

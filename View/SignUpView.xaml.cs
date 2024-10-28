@@ -46,9 +46,13 @@ namespace ThriffSignUp.View
                 try
                 {
                     conn.Open();
-                    string sql = "INSERT INTO Users (username, password, email) VALUES (@username, @password, @Email)";
+                    string sql = "INSERT INTO Buyer (buyerid, username, password, email) VALUES (@buyerid, @username, @password, @Email)";
                     using (var cmd = new NpgsqlCommand(sql, conn))
                     {
+                        Random random = new Random();
+                        int buyerid = random.Next(100000, 999999); 
+
+                        cmd.Parameters.AddWithValue("buyerid", buyerid);
                         cmd.Parameters.AddWithValue("username", username);
                         cmd.Parameters.AddWithValue("password", password);
                         cmd.Parameters.AddWithValue("email", email);
@@ -58,9 +62,10 @@ namespace ThriffSignUp.View
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message, "Insert FAIL", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Console.WriteLine(ex.Message);
                     return false;
                 }
+
             }
         }
 
