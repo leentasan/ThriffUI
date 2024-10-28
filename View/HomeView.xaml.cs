@@ -32,11 +32,11 @@ namespace ThriffSignUp.View
 
         private void Product_Clicked(object sender, MouseButtonEventArgs e)
         {
-            if (ProductList.SelectedItem is Product selectedProduct)
-            {
-                DetailProductView detailView = new DetailProductView(selectedProduct);
-                detailView.Show();
-            }
+            //if (ProductList.SelectedItem is Product selectedProduct)
+            //{
+            //    DetailProductView detailView = new DetailProductView(selectedProduct);
+            //    detailView.Show();
+            //}
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
