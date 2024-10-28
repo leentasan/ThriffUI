@@ -11,7 +11,7 @@ namespace WPF_LoginForm.View
             InitializeComponent();
         }
         private NpgsqlConnection conn;
-        string connstring = "Host=localhost; Port:5432; Username= ; Password: ; Database: ";
+        string connstring = "Host=localhost; Port:5432; Username=postgres ; Password:della2908 ; Database:Thriff ";
 
         private void btnSignUp_Click(object sender, RoutedEventArgs e)
         {
