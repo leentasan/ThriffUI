@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using Npgsql;
 
 namespace WPF_LoginForm.View
 {
@@ -9,6 +10,8 @@ namespace WPF_LoginForm.View
         {
             InitializeComponent();
         }
+        private NpgsqlConnection conn;
+        string connstring = "Host=localhost; Port:5432; Username= ; Password: ; Database: ";
 
         private void btnSignUp_Click(object sender, RoutedEventArgs e)
         {
@@ -47,18 +50,40 @@ namespace WPF_LoginForm.View
         {
             try
             {
-                // Implementasi menyimpan data ke database (contoh dengan file atau list sementara)
-                // Database real bisa menggantikan logika ini
-                // Misalnya:
-                // INSERT INTO Buyer (Username, Password, Email) VALUES(username, password, email);
+                // Open database connection
+                conn = new NpgsqlConnection(connstring);
+                conn.Open();
 
-                return true; // Jika sukses menyimpan ke database
+                // SQL Insert statement with parameters
+                string sql = "INSERT INTO Users (username, password, email) VALUES (@username, @password, @Email)";
+                using (var cmd = new NpgsqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("username", username);
+                    cmd.Parameters.AddWithValue("password", password);
+                    cmd.Parameters.AddWithValue("email", email);
+
+                    // Execute the query and check if insertion was successful
+                    if (cmd.ExecuteNonQuery() == 1)
+                    {
+                        MessageBox.Show("User successfully registered!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return true;
+                    }
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message); // Menampilkan error jika ada
-                return false; // Jika gagal
+                MessageBox.Show("Error: " + ex.Message, "Insert FAIL", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
             }
+            finally
+            {
+                // Close the connection
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+            return false;
         }
 
         private void GoToLogin(object sender, RoutedEventArgs e)

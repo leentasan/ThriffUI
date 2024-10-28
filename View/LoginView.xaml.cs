@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using Npgsql;
 
 namespace WPF_LoginForm.View
 {
@@ -10,7 +11,9 @@ namespace WPF_LoginForm.View
         {
             InitializeComponent();
         }
-
+        private NpgsqlConnection conn;
+        string connstring = "Host=localhost; Port:5432; Username= ; Password: ; Database: ";
+        
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             // Implementasi login di sini, contohnya mengecek username dan password
@@ -27,6 +30,8 @@ namespace WPF_LoginForm.View
             {
                 MessageBox.Show("Login Failed");
             }
+            ;
+
         }
 
         private void GoToSignUp(object sender, RoutedEventArgs e)
