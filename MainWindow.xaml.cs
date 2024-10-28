@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using System;
 
 namespace ThriffSignUp
 {
@@ -25,15 +13,28 @@ namespace ThriffSignUp
 
         private void LoadWelcomeView()
         {
-            var welcomeView = new View.WelcomeView();
-            this.Content = welcomeView; 
+            try
+            {
+                var welcomeView = new View.WelcomeView();
+                this.Content = welcomeView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load WelcomeView: {ex.Message}");
+            }
         }
 
         public void NavigateToLoginPage()
         {
-            var loginView = new View.LoginView();
-            this.Content = loginView;
+            try
+            {
+                var loginView = new View.LoginView();
+                this.Content = loginView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load LoginView: {ex.Message}");
+            }
         }
     }
 }
-
