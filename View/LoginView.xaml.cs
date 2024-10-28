@@ -2,7 +2,7 @@
 using System.Windows;
 using Npgsql;
 
-namespace WPF_LoginForm.View
+namespace ThriffSignUp.View
 {
     public partial class LoginView : Window
     {
