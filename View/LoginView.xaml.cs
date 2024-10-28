@@ -1,42 +1,58 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Input;
 using Npgsql;
 
 namespace WPF_LoginForm.View
 {
     public partial class LoginView : Window
     {
+        private NpgsqlConnection conn;
+        private string connstring = "Host=localhost; Port:5432; Username=postgres ; Password:della2908 ; Database:thriff ";
+
         public LoginView()
         {
             InitializeComponent();
+            conn = new NpgsqlConnection(connstring);
         }
-        private NpgsqlConnection conn;
-        string connstring = "Host=localhost; Port:5432; Username= ; Password: ; Database: ";
-        
+
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            // Implementasi login di sini, contohnya mengecek username dan password
             string username = txtUser.Text;
             string password = txtPass.Password;
 
-            // Contoh logika sederhana (ganti dengan koneksi ke database)
-            if (username == "buyer" && password == "1234")
+            try
             {
-                MessageBox.Show("Login Successful");
-                // Alihkan ke halaman lain jika berhasil
-            }
-            else
-            {
-                MessageBox.Show("Login Failed");
-            }
-            ;
+                conn.Open();
+                string query = "SELECT COUNT(*) FROM users WHERE username = @username AND password = @password";
+                using (var cmd = new NpgsqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("username", username);
+                    cmd.Parameters.AddWithValue("password", password);
 
+                    int result = (int)cmd.ExecuteScalar();
+                    if (result > 0)
+                    {
+                        MessageBox.Show("Login Successful");
+                        // Lakukan pengalihan halaman jika login berhasil
+                    }
+                    else
+                    {
+                        MessageBox.Show("Login Failed");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
         private void GoToSignUp(object sender, RoutedEventArgs e)
         {
-            // Berpindah ke halaman SignUp
             SignUpView signUpView = new SignUpView();
             signUpView.Show();
             this.Close();
@@ -51,7 +67,5 @@ namespace WPF_LoginForm.View
         {
             this.WindowState = WindowState.Minimized;
         }
-        
-
     }
 }

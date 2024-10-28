@@ -13,6 +13,28 @@ namespace WPF_LoginForm.View
         private NpgsqlConnection conn;
         string connstring = "Host=localhost; Port:5432; Username=postgres ; Password:della2908 ; Database:thriff ";
 
+        // Fungsi untuk mengecek koneksi database
+        private void CheckDatabaseConnection()
+        {
+            try
+            {
+                conn = new NpgsqlConnection(connstring);
+                conn.Open();
+                MessageBox.Show("Database connected successfully!", "Connection Status", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to connect to database: " + ex.Message, "Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+        }
+
         private void btnSignUp_Click(object sender, RoutedEventArgs e)
         {
             // Ambil input dari pengguna
