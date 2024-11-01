@@ -13,6 +13,8 @@ namespace ThriffSignUp.View
         {
             InitializeComponent();
         }
+        private NpgsqlConnection conn;
+        string connstring = "Host=localhost; Port:5432; Username= ; Password: ; Database: ";
 
         private void btnSignUp_Click(object sender, RoutedEventArgs e)
         {
