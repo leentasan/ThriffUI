@@ -1,57 +1,60 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Controls;
 using Npgsql;
 
-namespace WPF_LoginForm.View
+namespace ThriffSignUp.View
 {
-    public partial class LoginView : Window
+    public partial class LoginView : UserControl
     {
+        private readonly NpgsqlConnection conn;
+        private readonly string connstring = "Host=localhost;Port=5432;Username=postgres;Password=della2908;Database=thriff";
+
         public LoginView()
         {
             InitializeComponent();
+            conn = new NpgsqlConnection(connstring);
         }
-        private NpgsqlConnection conn;
-        string connstring = "Host=localhost; Port:5432; Username= ; Password: ; Database: ";
-        
+
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            // Implementasi login di sini, contohnya mengecek username dan password
             string username = txtUser.Text;
             string password = txtPass.Password;
 
-            // Contoh logika sederhana (ganti dengan koneksi ke database)
-            if (username == "buyer" && password == "1234")
+            try
             {
-                MessageBox.Show("Login Successful");
-                // Alihkan ke halaman lain jika berhasil
-            }
-            else
-            {
-                MessageBox.Show("Login Failed");
-            }
-            ;
+                conn.Open();
+                string query = "SELECT COUNT(*) FROM buyer WHERE username = @username AND password = @password";
 
+                using (var cmd = new NpgsqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("username", username);
+                    cmd.Parameters.AddWithValue("password", password);
+
+                    int result = Convert.ToInt32(cmd.ExecuteScalar());
+                    if (result > 0)
+                    {
+                        MessageBox.Show("Login Successful");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Login Failed. Please check your credentials.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Database Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
         private void GoToSignUp(object sender, RoutedEventArgs e)
         {
-            // Berpindah ke halaman SignUp
-            SignUpView signUpView = new SignUpView();
-            signUpView.Show();
-            this.Close();
+            (Application.Current.MainWindow as MainWindow)?.NavigateToSignUpPage();
         }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnMinimize_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
-        
-
     }
 }
