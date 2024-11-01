@@ -14,7 +14,6 @@ namespace ThriffSignUp.View
             InitializeComponent();
         }
         private NpgsqlConnection conn;
-        string connstring = "Host=localhost; Port:5432; Username= ; Password: ; Database: ";
 
         private void btnSignUp_Click(object sender, RoutedEventArgs e)
         {
@@ -51,8 +50,8 @@ namespace ThriffSignUp.View
                     string sql = "INSERT INTO Buyer (buyerid, username, password, email) VALUES (@buyerid, @username, @password, @Email)";
                     using (var cmd = new NpgsqlCommand(sql, conn))
                     {
-                        Random random = new Random();
-                        int buyerid = random.Next(100000, 999999); 
+                        //Random random = new Random();
+                        //int buyerid = random.Next(100000, 999999); 
 
                         cmd.Parameters.AddWithValue("buyerid", buyerid);
                         cmd.Parameters.AddWithValue("username", username);
