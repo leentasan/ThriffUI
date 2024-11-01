@@ -29,5 +29,11 @@ namespace ThriffSignUp.View
         {
 
         }
+        private void GoToSignUp(object sender, RoutedEventArgs e)
+        {
+            (Application.Current.MainWindow as MainWindow)?.NavigateToSellerSignUp();
+        }
+
+
     }
 }
