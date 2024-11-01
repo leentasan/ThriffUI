@@ -16,24 +16,22 @@ using System.Windows.Shapes;
 namespace ThriffSignUp.View
 {
     /// <summary>
-    /// Interaction logic for S_LogIn.xaml
+    /// Interaction logic for sLogIn.xaml
     /// </summary>
-    public partial class S_LogIn : UserControl
+    public partial class sLogIn : UserControl
     {
-        public S_LogIn()
+        public sLogIn()
         {
             InitializeComponent();
-        }
-
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
-        {
-
         }
         private void GoToSignUp(object sender, RoutedEventArgs e)
         {
             (Application.Current.MainWindow as MainWindow)?.NavigateToSellerSignUp();
         }
 
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }

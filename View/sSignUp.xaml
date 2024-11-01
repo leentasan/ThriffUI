@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="ThriffSignUp.SLogin"
+﻿<UserControl x:Class="ThriffSignUp.View.sSignUp"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             Height="550" Width="800">
-
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ThriffSignUp.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="800">
     <Border CornerRadius="12" BorderBrush="Gray" BorderThickness="1">
         <Border CornerRadius="10" BorderThickness="2" Opacity="0.95">
             <Border.BorderBrush>

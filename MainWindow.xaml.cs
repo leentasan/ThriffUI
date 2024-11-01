@@ -54,8 +54,8 @@ namespace ThriffSignUp
         {
             try
             {
-                var signUpView = new View.sSignUp();
-                this.Content = signUpView;
+                var signUp = new View.sSignUp();
+                this.Content = signUp;
             }
             catch (Exception ex)
             {
@@ -66,8 +66,8 @@ namespace ThriffSignUp
         {
             try
             {
-                var signUpView = new View.sLogIn();
-                this.Content = signUpView;
+                var logIn = new View.sLogIn();
+                this.Content = logIn;
             }
             catch (Exception ex)
             {

@@ -13,25 +13,25 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ThriffSignUp
+namespace ThriffSignUp.View
 {
     /// <summary>
-    /// Interaction logic for SLogin.xaml
+    /// Interaction logic for sSignUp.xaml
     /// </summary>
-    public partial class SLogin : UserControl
+    public partial class sSignUp : UserControl
     {
-        public SLogin()
+        public sSignUp()
         {
             InitializeComponent();
+        }
+        private void GoToLogin(object sender, RoutedEventArgs e)
+        {
+            (Application.Current.MainWindow as MainWindow)?.NavigateToSellerLogIn();
         }
 
         private void btnSignUp_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-        private void GoToLogin(object sender, RoutedEventArgs e)
-        {
-            (Application.Current.MainWindow as MainWindow)?.NavigateToSellerLogIn();
         }
     }
 }
