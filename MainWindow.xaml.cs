@@ -50,5 +50,29 @@ namespace ThriffSignUp
                 MessageBox.Show($"Failed to load SignUpView: {ex.Message}");
             }
         }
+        public void NavigateToSellerSignUp()
+        {
+            try
+            {
+                var signUp = new View.sSignUp();
+                this.Content = signUp;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load SellerSignUp: {ex.Message}");
+            }
+        }
+        public void NavigateToSellerLogIn()
+        {
+            try
+            {
+                var logIn = new View.sLogIn();
+                this.Content = logIn;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load SellerLogIn: {ex.Message}");
+            }
+        }
     }
 }

@@ -53,7 +53,7 @@ namespace ThriffSignUp.View
                         //Random random = new Random();
                         //int buyerid = random.Next(100000, 999999); 
 
-                        cmd.Parameters.AddWithValue("buyerid", buyerid);
+                        //cmd.Parameters.AddWithValue("buyerid", buyerid);
                         cmd.Parameters.AddWithValue("username", username);
                         cmd.Parameters.AddWithValue("password", password);
                         cmd.Parameters.AddWithValue("email", email);
