@@ -37,7 +37,7 @@
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="LOG IN"
+                    <TextBlock Text="SELLER - LOG IN"
                            Foreground="DarkGray"
                            FontSize="10"
                            FontFamily="Montserrat"
