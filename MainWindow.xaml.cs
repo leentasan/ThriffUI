@@ -25,7 +25,7 @@ namespace ThriffSignUp
             }
         }
 
-        public void NavigateToLoginPage()
+        public void NavigateToBuyerLogin()
         {
             try
             {

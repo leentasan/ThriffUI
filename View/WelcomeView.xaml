@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:ThriffSignUp.View"
              mc:Ignorable="d"
              Height="550" Width="800">
-   
- <!-- Outer Border with rounded corners -->
+
+    <!-- Outer Border with rounded corners -->
     <Border CornerRadius="12" Background="White" BorderThickness="2"
             BorderBrush="{DynamicResource BorderBrush}" Padding="10">
 
@@ -122,35 +122,82 @@
                 <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="276,0,0,0">
                     <Image Source="/Images/ILUSTRASI.png" Width="200" Height="200" HorizontalAlignment="Center" Margin="0,0,0,20"/>
                     <TextBlock Text="Welcome to Thriff!" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Foreground="Black" Margin="0,0,0,20"/>
-                    <Button x:Name="btnNext" 
-                            BorderThickness="0"
-                            Content="NEXT"
-                            Foreground="White"
-                            FontSize="12"
-                            FontFamily="Montserrat"
-                            Cursor="Hand"
-                            Click="btnNext_Click">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="#FFA310"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#28AEED"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Width="150" Height="40"
-                                        CornerRadius="20"
-                                        Background="{TemplateBinding Background}">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                      HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                    <!-- Pilihan Role sebagai Dropdown -->
+                    <!-- Pilihan Role sebagai Dropdown dengan UI yang Disesuaikan -->
+                    <!-- Pilihan Role sebagai Dropdown dengan UI yang Disesuaikan -->
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,0,20">
+                        <TextBlock Text="Choose your role:" FontSize="16" FontWeight="SemiBold" Foreground="black" Margin="0,0,0,10"/>
+                        <ComboBox x:Name="roleComboBox" Width="150" FontSize="14" FontFamily="Montserrat" HorizontalAlignment="Center" SelectionChanged="roleComboBox_SelectionChanged">
+                            <ComboBox.Resources>
+                                <!-- Style untuk ComboBox -->
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="Background" Value="#FFA310"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                    <Setter Property="Padding" Value="5"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                </Style>
+
+                                <!-- Style untuk ComboBoxItem -->
+                                <Style TargetType="ComboBoxItem">
+                                    <Setter Property="Background" Value="White"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Setter Property="Padding" Value="5"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#28AEED"/>
+                                            <Setter Property="Foreground" Value="black"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#FFA310"/>
+                                            <Setter Property="Foreground" Value="Black"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ComboBox.Resources>
+
+                            <!-- Item pilihan role -->
+                            <ComboBoxItem Content="Buyer"/>
+                            <ComboBoxItem Content="Seller"/>
+                        </ComboBox>
+
+                        <!-- Tombol Next -->
+                        <Button x:Name="btnNext" 
+        Content="NEXT"
+        Width="150"
+        Height="40"
+        Margin="0,20,0,0"
+        FontSize="12"
+        FontFamily="Montserrat"
+        Foreground="White"
+        Background="#FFA310"
+        BorderThickness="0"
+        Cursor="Hand"
+        Click="btnNext_Click">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#28AEED"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </Border>

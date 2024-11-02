@@ -24,8 +24,23 @@ namespace ThriffSignUp.View
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            // Navigate to LoginView
-            (Application.Current.MainWindow as MainWindow)?.NavigateToLoginPage();
+            if (roleComboBox.SelectedItem is ComboBoxItem selectedRole)
+            {
+                string role = selectedRole.Content.ToString();
+
+                if (role == "Seller")
+                {
+                    (Application.Current.MainWindow as MainWindow)?.NavigateToSellerLogIn();
+                }
+                else if (role == "Buyer")
+                {
+                    (Application.Current.MainWindow as MainWindow)?.NavigateToBuyerLogin();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a role to continue.", "Role Selection", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
@@ -36,6 +51,11 @@ namespace ThriffSignUp.View
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.Close();
+        }
+
+        private void roleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

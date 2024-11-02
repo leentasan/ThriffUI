@@ -32,7 +32,7 @@ namespace ThriffSignUp.View
             if (isRegistered)
             {
                 MessageBox.Show("Sign Up Successful!");
-                (Application.Current.MainWindow as MainWindow)?.NavigateToLoginPage();
+                (Application.Current.MainWindow as MainWindow)?.NavigateToBuyerLogin();
             }
             else
             {
@@ -72,7 +72,7 @@ namespace ThriffSignUp.View
 
         private void GoToLogin(object sender, RoutedEventArgs e)
         {
-            (Application.Current.MainWindow as MainWindow)?.NavigateToLoginPage();
+            (Application.Current.MainWindow as MainWindow)?.NavigateToBuyerLogin();
         }
     }
 }
