@@ -74,5 +74,52 @@ namespace ThriffSignUp
                 MessageBox.Show($"Failed to load SellerLogIn: {ex.Message}");
             }
         }
+        public void NavigateToSellerHome()
+        {
+            try
+            {
+                var sellHome = new View.sHome();
+                this.Content = sellHome;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load SellerHome: {ex.Message}");
+            }
+        }
+        public void NavigateToProductsEdit()
+        {
+            try
+            {
+                var product = new View.sProduct();
+                this.Content = product;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Failed to load Product: {e.Message}");
+            }
+        }
+        public void NavigateToProductsEdit(int? productId = null)
+        {
+            var productControl = new sProduct();
+
+            if (productId.HasValue)
+            {
+                productControl.LoadProductForEditing(productId.Value);
+            }
+
+            Content = productControl;
+        }
+        public void NavigateToOrders()
+        {
+            try
+            {
+                var orders = new View.sOrder();
+                this.Content = orders;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Failed to load Orders: {e.Message}");
+            }
+        }
     }
 }

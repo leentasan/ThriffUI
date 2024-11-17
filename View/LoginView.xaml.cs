@@ -8,7 +8,7 @@ namespace ThriffSignUp.View
     public partial class LoginView : UserControl
     {
         private readonly NpgsqlConnection conn;
-        private readonly string connstring = "Host=localhost;Port=5432;Username=postgres;Password=della2908;Database=thriff";
+        private readonly string connstring = "Host=localhost;Port=5432;Username=postgres;Password=jena2019;Database=Thriff";
 
         public LoginView()
         {
