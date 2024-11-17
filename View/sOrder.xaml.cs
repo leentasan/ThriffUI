@@ -94,10 +94,17 @@ namespace ThriffSignUp.View
         // Refresh methods to reload the list views
         private void RefreshOrderLists()
         {
-            // Implement logic to reload NewOrdersList, OnProcessOrdersList, FinishedOrdersList
-            NewOrders.Remove(order);
-            RefreshOrderLists();
+            // Force the ListView bindings to refresh
+            NewOrdersList.ItemsSource = null;
+            NewOrdersList.ItemsSource = NewOrders;
+
+            OnProcessOrdersList.ItemsSource = null;
+            OnProcessOrdersList.ItemsSource = OnProcessOrders;
+
+            FinishedOrdersList.ItemsSource = null;
+            FinishedOrdersList.ItemsSource = FinishedOrders;
         }
+
 
     }
 }
