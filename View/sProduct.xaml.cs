@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Configuration;
 using ThriffSignUp.Model;
+using static System.Collections.Specialized.BitVector32;
 
 namespace ThriffSignUp.View
 {
@@ -65,9 +66,11 @@ namespace ThriffSignUp.View
             isEditMode = true;
             currentProductId = productId;
 
+            // Fetch the product details using the product ID
             var product = productService.GetProductById(productId);
             if (product != null)
             {
+                // Populate the textboxes with the product data
                 txtProductName.Text = product.Name;
                 txtPrice.Text = product.Price.ToString();
                 txtDescription.Text = product.Description;
@@ -78,7 +81,12 @@ namespace ThriffSignUp.View
                     productImage.Source = new BitmapImage(new Uri(product.ImagePath));
                 }
             }
+            else
+            {
+                MessageBox.Show("Product not found.");
+            }
         }
+
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -94,12 +102,18 @@ namespace ThriffSignUp.View
                     MessageBox.Show("Invalid price. Please enter a valid number.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
+
+                int sellerId = Session.LoggedInSellerId;
+                MessageBox.Show($"SellerId being used: {Session.LoggedInSellerId}");
+
+
                 var product = new Product
                 {
                     Name = txtProductName.Text,
                     Price = double.Parse(txtPrice.Text),
                     ImagePath = txtImagePath.Text,
-                    Description = txtDescription.Text
+                    Description = txtDescription.Text,
+                    SellerId = Session.LoggedInSellerId
                 };
 
                 if (isEditMode)
@@ -109,7 +123,7 @@ namespace ThriffSignUp.View
                 }
                 else
                 {
-                    productService.AddProduct(product);     // Add new product
+                    productService.AddProduct(product, Session.LoggedInSellerId);     // Add new product
                     MessageBox.Show("Product added successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 // Navigasi kembali ke halaman utama seller
