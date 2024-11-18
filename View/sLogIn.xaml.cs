@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ThriffSignUp.Model;
+
 
 namespace ThriffSignUp.View
 {
@@ -38,22 +40,34 @@ namespace ThriffSignUp.View
             string username = txtUser.Text;
             string password = txtPass.Password;
 
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Please enter both username and password.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             using (var conn = new NpgsqlConnection(connstring))
 
                 try
             {
                 conn.Open();
-                string query = "SELECT COUNT(*) FROM seller WHERE username = @username AND password = @password";
+                string query = "SELECT sellerid FROM seller WHERE username = @username AND password = @password";
 
                 using (var cmd = new NpgsqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("username", username);
                     cmd.Parameters.AddWithValue("password", password);
 
-                    int result = Convert.ToInt32(cmd.ExecuteScalar());
-                    if (result > 0)
-                    {
-                        (Application.Current.MainWindow as MainWindow)?.NavigateToSellerHome();
+                        var result = cmd.ExecuteScalar();
+
+                        if (result != null) // If a valid SellerId is retrieved
+                        {
+
+                            Session.LoggedInSellerId = Convert.ToInt32(result); // Save the SellerId in session
+                            Session.SellerUsername = username; // Optionally save the username
+                            MessageBox.Show("Login successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            (Application.Current.MainWindow as MainWindow)?.NavigateToSellerHome();
                     }
                     else
                     {

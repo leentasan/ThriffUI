@@ -1,4 +1,5 @@
 ﻿using Npgsql;
+using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,17 +15,19 @@ namespace ThriffSignUp.Model
             connectionString = ConfigurationManager.ConnectionStrings["PostgresConnection"].ConnectionString;
         }
 
-        public void AddProduct(Product product)
+        public void AddProduct(Product product, int SellerId)
         {
             using (var connection = new NpgsqlConnection(connectionString))
             {
                 connection.Open();
-                var command = new NpgsqlCommand("INSERT INTO Product (Name, Price, ImagePath, Description) VALUES (@name, @price, @imagePath, @description)", connection);
+                var command = new NpgsqlCommand("INSERT INTO Product (Name, Price, Image, Description, sellerid) VALUES (@name, @price, @imagePath, @description, @sellerId)", connection);
                 command.Parameters.AddWithValue("@name", product.Name);
                 command.Parameters.AddWithValue("@price", product.Price);
                 command.Parameters.AddWithValue("@imagePath", product.ImagePath);
                 command.Parameters.AddWithValue("@description", product.Description);
+                command.Parameters.AddWithValue("@sellerId", product.SellerId);
                 command.ExecuteNonQuery();
+
             }
         }
         public void UpdateProduct(Product product)
@@ -32,7 +35,7 @@ namespace ThriffSignUp.Model
             using (var connection = new NpgsqlConnection(connectionString))
             {
                 connection.Open();
-                var command = new NpgsqlCommand("UPDATE Product SET Name = @name, Price = @price, ImagePath = @imagePath, Description = @description WHERE ProductId = @id", connection);
+                var command = new NpgsqlCommand("UPDATE Product SET Name = @name, Price = @price, Image = @imagePath, Description = @description WHERE ProductId = @id", connection);
                 command.Parameters.AddWithValue("@name", product.Name);
                 command.Parameters.AddWithValue("@price", product.Price);
                 command.Parameters.AddWithValue("@imagePath", product.ImagePath);
@@ -46,7 +49,7 @@ namespace ThriffSignUp.Model
             using (var connection = new NpgsqlConnection(connectionString))
             {
                 connection.Open();
-                var command = new NpgsqlCommand("SELECT ProductId, Name, Price, ImagePath, Description FROM Product WHERE ProductId = @id", connection);
+                var command = new NpgsqlCommand("SELECT ProductId, Name, Price, Image, Description FROM Product WHERE ProductId = @id", connection);
                 command.Parameters.AddWithValue("@id", productId);
 
                 using (var reader = command.ExecuteReader())
@@ -66,6 +69,17 @@ namespace ThriffSignUp.Model
             }
             return null;
         }
+        public void DeleteProduct(int productId)
+        {
+            using (var connection = new NpgsqlConnection(connectionString))
+            {
+                connection.Open();
+                var command = new NpgsqlCommand("DELETE FROM Product WHERE ProductId = @id", connection);
+                command.Parameters.AddWithValue("@id", productId);
+                command.ExecuteNonQuery();
+            }
+        }
+
 
         public List<Product> GetAllProducts()
         {
@@ -73,7 +87,7 @@ namespace ThriffSignUp.Model
             using (var connection = new NpgsqlConnection(connectionString))
             {
                 connection.Open();
-                var command = new NpgsqlCommand("SELECT Name, Price, ImagePath, Description FROM Product", connection);
+                var command = new NpgsqlCommand("SELECT Name, Price, Image, Description FROM Product", connection);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())

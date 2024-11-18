@@ -98,17 +98,19 @@ namespace ThriffSignUp
                 MessageBox.Show($"Failed to load Product: {e.Message}");
             }
         }
-        public void NavigateToProductsEdit(int? productId = null)
+        public void NavigateToProductsEdit(int productId)
         {
-            var productControl = new sProduct();
+            // Create an instance of the sProduct page
+            var productPage = new sProduct();
 
-            if (productId.HasValue)
-            {
-                productControl.LoadProductForEditing(productId.Value);
-            }
+            // Pass the product ID to load the product data for editing
+            productPage.LoadProductForEditing(productId);
 
-            Content = productControl;
+            // Set the ContentControl's content to the productPage
+            ContentArea.Content = productPage;
         }
+
+
         public void NavigateToOrders()
         {
             try

@@ -79,7 +79,7 @@
                             </StackPanel>
 
                             <!-- Product List using GridView -->
-                            <ListView Name="lstProducts" Margin="10">
+                            <ListView Name="lstProducts" Margin="10" Height="168" SelectionChanged="ProductGrid_SelectionChanged">
                                 <ListView.View>
                                     <GridView>
                                         <!-- Kolom untuk menampilkan gambar produk -->

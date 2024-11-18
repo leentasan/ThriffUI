@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height=" 600" Width="820">
     <Grid>
+        <ContentControl Name="ContentArea" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         
     </Grid>
 </Window>

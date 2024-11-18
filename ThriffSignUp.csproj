@@ -107,8 +107,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductService.cs" />
+    <Compile Include="Model\Session.cs" />
     <Compile Include="View\sHome.xaml.cs">
       <DependentUpon>sHome.xaml</DependentUpon>
     </Compile>
