@@ -48,7 +48,7 @@ namespace ThriffSignUp.View
 
                     string source = txtImagePath.Text;
                     FileInfo info = new FileInfo(source);
-                    string destination = @"C:\Users\Gabriella\source\repos\ThriffUI\Images\" + System.IO.Path.GetFileName(source);
+                    string destination = @"C:\Users\Gabriella\ThriffUI\Images\Products\" + System.IO.Path.GetFileName(source);
 
                     info.CopyTo(destination);
                 }
