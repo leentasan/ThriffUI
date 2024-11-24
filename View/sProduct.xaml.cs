@@ -62,25 +62,32 @@ namespace ThriffSignUp.View
         {
             isEditMode = true;
             currentProductId = productId;
-
-            // Fetch the product details using the product ID
-            var product = productService.GetProductById(productId);
-            if (product != null)
+            try
             {
-                // Populate the textboxes with the product data
-                txtProductName.Text = product.Name;
-                txtPrice.Text = product.Price.ToString();
-                txtDescription.Text = product.Description;
-                txtImagePath.Text = product.ImagePath;
-
-                if (!string.IsNullOrEmpty(product.ImagePath))
+                // Fetch the product details using the product ID
+                var product = productService.GetProductById(productId);
+                if (product != null)
                 {
-                    productImage.Source = new BitmapImage(new Uri(product.ImagePath));
+                    // Populate the textboxes with the product data
+                    txtProductName.Text = product.Name;
+                    txtPrice.Text = product.Price.ToString();
+                    txtDescription.Text = product.Description;
+                    txtImagePath.Text = product.ImagePath;
+                    cmbCategory.Text = product.Category;
+
+                    if (!string.IsNullOrEmpty(product.ImagePath))
+                    {
+                        productImage.Source = new BitmapImage(new Uri(product.ImagePath));
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Product not found.");
                 }
             }
-            else
+            catch (Exception e)
             {
-                MessageBox.Show("Product not found.");
+                MessageBox.Show($"Error loading product {e.Message}");
             }
         }
 
@@ -104,13 +111,15 @@ namespace ThriffSignUp.View
                 MessageBox.Show($"SellerId being used: {Session.LoggedInSellerId}");
 
 
-                var product = new ThriffSignUp.Model.Product
+                var product = new Product
                 {
+                    ProductId = currentProductId,
                     Name = txtProductName.Text,
                     Price = double.Parse(txtPrice.Text),
                     ImagePath = txtImagePath.Text,
                     Description = txtDescription.Text,
-                    SellerId = Session.LoggedInSellerId
+                    SellerId = Session.LoggedInSellerId,
+                    Category = (cmbCategory.SelectedItem as ComboBoxItem)?.Content.ToString()
                 };
 
                 if (isEditMode)

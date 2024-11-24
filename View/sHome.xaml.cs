@@ -21,7 +21,7 @@ namespace ThriffSignUp.View
         {
             try
             {
-                var products = productService.GetAllProducts();
+                var products = productService.GetAllProducts(Session.LoggedInSellerId);
                 lstProducts.ItemsSource = products; // Bind data to ListView
             }
             catch (Exception ex)
@@ -80,6 +80,14 @@ namespace ThriffSignUp.View
             var selectedProduct = lstProducts.SelectedItem as Product;
         }
 
+        private void btnManageAccount_Click(object sender, RoutedEventArgs e)
+        {
+            (Application.Current.MainWindow as MainWindow)?.NavigateToAccount();
+        }
 
+        private void btnLoadProduct_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

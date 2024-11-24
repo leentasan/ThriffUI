@@ -115,17 +115,17 @@ namespace ThriffSignUp
         }
         public void NavigateToProductsEdit(int productId)
         {
-            // Create an instance of the sProduct page
-            var productPage = new sProduct();
-
-            // Pass the product ID to load the product data for editing
-            productPage.LoadProductForEditing(productId);
-
-            // Set the ContentControl's content to the productPage
-            ContentArea.Content = productPage;
+            try
+            {
+                var productEditControl = new sProduct();
+                productEditControl.LoadProductForEditing(productId);
+                Content = productEditControl; // Tampilkan halaman edit
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to edit Product: {ex.Message}");
+            }
         }
-
-
         public void NavigateToOrders()
         {
             try
@@ -136,6 +136,18 @@ namespace ThriffSignUp
             catch (Exception e)
             {
                 MessageBox.Show($"Failed to load Orders: {e.Message}");
+            }
+        }
+        public void NavigateToAccount()
+        {
+            try
+            {
+                var account = new View.sAccount();
+                this.Content = account;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Failed to load Account Settings: {e.Message}");
             }
         }
     }
