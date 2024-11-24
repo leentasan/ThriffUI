@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Windows;
+using System.IO;
 
 namespace ThriffSignUp.Model
 {
@@ -95,12 +96,32 @@ namespace ThriffSignUp.Model
         {
             try
             {
+                string imagePath = string.Empty;
+                //get image path
+                using (var connection = new NpgsqlConnection(connectionString))
+                {
+                    connection.Open();
+                    var selectCommand = new NpgsqlCommand("SELECT ImagePath FROM Product WHERE ProductId = @id", connection);
+                    selectCommand.Parameters.AddWithValue("@id", productId);
+
+                    var result = selectCommand.ExecuteScalar();
+                    if (result != null)
+                    {
+                        imagePath = result.ToString();
+                    }
+                }
+                //delete product from database
                 using (var connection = new NpgsqlConnection(connectionString))
                 {
                     connection.Open();
                     var command = new NpgsqlCommand("DELETE FROM Product WHERE ProductId = @id", connection);
                     command.Parameters.AddWithValue("@id", productId);
                     command.ExecuteNonQuery();
+                }
+                //delete image from file
+                if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
+                {
+                    File.Delete(imagePath);
                 }
             }
             catch (Exception ex)
