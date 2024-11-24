@@ -29,8 +29,8 @@ namespace ThriffSignUp
         {
             try
             {
-                var loginView = new View.LoginView();
-                this.Content = loginView;
+                var bLogIn = new View.bLogIn();
+                this.Content = bLogIn;
             }
             catch (Exception ex)
             {
@@ -42,14 +42,29 @@ namespace ThriffSignUp
         {
             try
             {
-                var signUpView = new View.SignUpView();
-                this.Content = signUpView;
+                var bSignUp = new View.bSignUp();
+                this.Content = bSignUp;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to load SignUpView: {ex.Message}");
             }
         }
+
+        public void NavigateToHomeBuyer()
+        {
+            try
+            {
+                // Buat instance dari bHome
+                var homeView = new View.bHome();
+                this.Content = homeView; // Ganti konten utama ke bHome
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load HomeView: {ex.Message}", "Navigation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         public void NavigateToSellerSignUp()
         {
             try

@@ -21,9 +21,6 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace ThriffSignUp.View
 {
-    /// <summary>
-    /// Interaction logic for sProduct.xaml
-    /// </summary>
     public partial class sProduct : UserControl
     {
         private readonly string connectionString;
@@ -107,7 +104,7 @@ namespace ThriffSignUp.View
                 MessageBox.Show($"SellerId being used: {Session.LoggedInSellerId}");
 
 
-                var product = new Product
+                var product = new ThriffSignUp.Model.Product
                 {
                     Name = txtProductName.Text,
                     Price = double.Parse(txtPrice.Text),
