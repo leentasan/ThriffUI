@@ -109,7 +109,7 @@ namespace ThriffSignUp.View
             var parentWindow = Window.GetWindow(this);
             if (parentWindow != null)
             {
-                parentWindow.Content = new bHome();
+                parentWindow.Content = new sHome();
             }
         }
 

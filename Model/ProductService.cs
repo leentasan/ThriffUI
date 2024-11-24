@@ -27,6 +27,7 @@ namespace ThriffSignUp.Model
                 command.Parameters.AddWithValue("@imagePath", product.ImagePath);
                 command.Parameters.AddWithValue("@description", product.Description);
                 command.Parameters.AddWithValue("@sellerId", product.SellerId);
+                command.Parameters.AddWithValue("@category", product.Category);
                 command.ExecuteNonQuery();
 
             }
