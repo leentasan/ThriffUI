@@ -104,7 +104,14 @@ namespace ThriffSignUp.View
             FinishedOrdersList.ItemsSource = null;
             FinishedOrdersList.ItemsSource = FinishedOrders;
         }
-
+        private void BackArrow_Click(object sender, RoutedEventArgs e)
+        {
+            var parentWindow = Window.GetWindow(this);
+            if (parentWindow != null)
+            {
+                parentWindow.Content = new bHome();
+            }
+        }
 
     }
 }
