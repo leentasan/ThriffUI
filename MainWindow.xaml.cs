@@ -25,12 +25,12 @@ namespace ThriffSignUp
             }
         }
 
-        public void NavigateToLoginPage()
+        public void NavigateToBuyerLogin()
         {
             try
             {
-                var loginView = new View.LoginView();
-                this.Content = loginView;
+                var bLogIn = new View.bLogIn();
+                this.Content = bLogIn;
             }
             catch (Exception ex)
             {
@@ -42,12 +42,112 @@ namespace ThriffSignUp
         {
             try
             {
-                var signUpView = new View.SignUpView();
-                this.Content = signUpView;
+                var bSignUp = new View.bSignUp();
+                this.Content = bSignUp;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to load SignUpView: {ex.Message}");
+            }
+        }
+
+        public void NavigateToHomeBuyer()
+        {
+            try
+            {
+                // Buat instance dari bHome
+                var homeView = new View.bHome();
+                this.Content = homeView; // Ganti konten utama ke bHome
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load HomeView: {ex.Message}", "Navigation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void NavigateToSellerSignUp()
+        {
+            try
+            {
+                var signUp = new View.sSignUp();
+                this.Content = signUp;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load SellerSignUp: {ex.Message}");
+            }
+        }
+        public void NavigateToSellerLogIn()
+        {
+            try
+            {
+                var logIn = new View.sLogIn();
+                this.Content = logIn;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load SellerLogIn: {ex.Message}");
+            }
+        }
+        public void NavigateToSellerHome()
+        {
+            try
+            {
+                var sellHome = new View.sHome();
+                this.Content = sellHome;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load SellerHome: {ex.Message}");
+            }
+        }
+        public void NavigateToProductsEdit()
+        {
+            try
+            {
+                var product = new View.sProduct();
+                this.Content = product;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Failed to load Product: {e.Message}");
+            }
+        }
+        public void NavigateToProductsEdit(int productId)
+        {
+            try
+            {
+                var productEditControl = new sProduct();
+                productEditControl.LoadProductForEditing(productId);
+                Content = productEditControl; // Tampilkan halaman edit
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to edit Product: {ex.Message}");
+            }
+        }
+        public void NavigateToOrders()
+        {
+            try
+            {
+                var orders = new View.sOrder();
+                this.Content = orders;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Failed to load Orders: {e.Message}");
+            }
+        }
+        public void NavigateToAccount()
+        {
+            try
+            {
+                var account = new View.sAccount();
+                this.Content = account;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Failed to load Account Settings: {e.Message}");
             }
         }
     }

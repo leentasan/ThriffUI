@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="ThriffSignUp.View.bHome"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="900">
+
+    <Border CornerRadius="12">
+        <Border CornerRadius="10" BorderThickness="2" Opacity="0.95">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#FFFFFF" Offset="0"/>
+                    <GradientStop Color="#558984" Offset="0.75"/>
+                    <GradientStop Color="#FFA310" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="#FFFFFF" Offset="0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <!-- Header Section -->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- App Name -->
+                    <TextBlock Text="THRIFF"
+                               Foreground="DarkGray"
+                               FontSize="16"
+                               FontFamily="Montserrat"
+                               VerticalAlignment="Center"
+                               Margin="10,0,0,0"/>
+
+                    <!-- Title -->
+                    <TextBlock Text="Let's Buy Your Needs" 
+                               Grid.Column="1" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Foreground="Black"/>
+                </Grid>
+
+                <!-- Filter and Search Section -->
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,0,20,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!-- TextBox Search -->
+                    <TextBox x:Name="SearchBox" Width="400" Height="30" 
+                             FontSize="14" Padding="10,2"
+                             FontFamily="Montserrat"
+                             VerticalContentAlignment="Center"
+                             TextChanged="SearchBox_TextChanged"
+                             Tag="Search products..."
+                             BorderBrush="#558984" BorderThickness="1"/>
+
+                    <!-- ComboBox Filter -->
+                    <ComboBox x:Name="CategoryFilter" Width="150" Height="30" 
+                              Margin="10,0,0,0" VerticalContentAlignment="Center"
+                              FontSize="14" FontFamily="Montserrat"
+                              SelectionChanged="CategoryFilter_SelectionChanged">
+                        <ComboBoxItem Content="All Categories" IsSelected="True"/>
+                        <ComboBoxItem Content="Bags"/>
+                        <ComboBoxItem Content="Shirts"/>
+                        <ComboBoxItem Content="Outerwear"/>
+                        <ComboBoxItem Content="Pants"/>
+                        <ComboBoxItem Content="Accessories"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Product List Section -->
+                <ScrollViewer Grid.Row="2" Margin="20,20,20,20">
+                    <ListView Name="ProductList"
+                              ItemsSource="{Binding Products}"
+                              BorderThickness="0"
+                              Background="Transparent"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              SelectionMode="Single"
+                              MouseDoubleClick="Product_Clicked"
+                              HorizontalContentAlignment="Center">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="3" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10">
+                                    <Image Source="{Binding ImagePath}" Width="120" Height="120" Margin="0,10,0,10" Stretch="UniformToFill"/>
+                                    <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="Bold" Foreground="#558984" TextAlignment="Center"/>
+                                    <TextBlock Text="{Binding Price, StringFormat=C}" FontSize="12" Foreground="DarkGray" TextAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Border>
+</UserControl>

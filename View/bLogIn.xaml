@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ThriffSignUp.View.SignUpView"
+﻿<UserControl x:Class="ThriffSignUp.View.bLogIn"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,10 +6,8 @@
              mc:Ignorable="d"
              Height="550" Width="800">
 
-    <Border CornerRadius="12">
-        <Border CornerRadius="10"
-                BorderThickness="2"
-                Opacity="0.95">
+    <Border CornerRadius="12" BorderBrush="Gray" BorderThickness="1">
+        <Border CornerRadius="10" BorderThickness="2" Opacity="0.95">
             <Border.BorderBrush>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                     <GradientStop Color="#FFFFFF" Offset="0"/>
@@ -39,25 +37,23 @@
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="SIGN UP"
+                    <TextBlock Text="BUYER - LOG IN"
                                Foreground="DarkGray"
                                FontSize="10"
                                FontFamily="Montserrat"
-                               Grid.Column="0"
                                VerticalAlignment="Center"
                                Margin="10,0,0,0"/>
 
                     <!-- Minimize and Close Buttons -->
-
                     <Button x:Name="btnMinimize"
-                            BorderThickness="0"
-                            Content="-"
-                            Foreground="White"
-                            FontSize="16"
-                            FontFamily="Montserrat"
-                            Cursor="Hand"
-                            Grid.Column="1"
-                            IsEnabled="False">          
+        BorderThickness="0"
+        Content="-"
+        Foreground="White"
+        FontSize="16"
+        FontFamily="Montserrat"
+        Cursor="Hand"
+        Grid.Column="1"
+        IsEnabled="False">
                         <!-- Disable the button -->
                         <Button.Style>
                             <Style TargetType="Button">
@@ -72,7 +68,7 @@
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border Width="18" Height="18" CornerRadius="9"
-                        Background="{TemplateBinding Background}">
+                    Background="{TemplateBinding Background}">
                                     <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Border>
                             </ControlTemplate>
@@ -80,14 +76,14 @@
                     </Button>
 
                     <Button x:Name="btnClose"
-                            BorderThickness="0"
-                            Content="X"
-                            Foreground="White"
-                            FontSize="12"
-                            FontFamily="Montserrat"
-                            Cursor="Hand"
-                            Grid.Column="2"
-                            IsEnabled="False">
+        BorderThickness="0"
+        Content="X"
+        Foreground="White"
+        FontSize="12"
+        FontFamily="Montserrat"
+        Cursor="Hand"
+        Grid.Column="2"
+        IsEnabled="False">
                         <!-- Disable the button -->
                         <Button.Style>
                             <Style TargetType="Button">
@@ -111,7 +107,7 @@
 
                 </Grid>
 
-                <!-- Sign Up Form Section -->
+                <!-- Login Form Section -->
                 <StackPanel Width="220" Grid.Row="1" Orientation="Vertical" Margin="0,35,0,0">
                     <Image Source="/Images/Thriff.png" Width="100" Height="100"/>
 
@@ -119,7 +115,7 @@
                                FontSize="12" FontWeight="Medium"
                                FontFamily="Montserrat" Margin="0,35,0,0"/>
 
-                    <TextBox x:Name="txtUsername" FontSize="13" FontWeight="Medium"
+                    <TextBox x:Name="txtUser" FontSize="13" FontWeight="Medium"
                              FontFamily="Montserrat" Foreground="black"
                              CaretBrush="LightGray" BorderBrush="DarkGray"
                              BorderThickness="0,0,0,2" Height="28"
@@ -130,33 +126,22 @@
                                FontSize="12" FontWeight="Medium"
                                FontFamily="Montserrat" Margin="0,15,0,0"/>
 
-                    <PasswordBox x:Name="txtPassword" FontSize="13" FontWeight="Medium"
+                    <PasswordBox x:Name="txtPass" FontSize="13" FontWeight="Medium"
                                  FontFamily="Montserrat" Foreground="black"
                                  CaretBrush="LightGray" BorderBrush="DarkGray"
                                  BorderThickness="0,0,0,2" Height="28"
                                  VerticalContentAlignment="Center" Margin="0,5,0,0"
                                  Padding="20,0,0,0"/>
 
-                    <TextBlock Text="Email" Foreground="DarkGray"
-                               FontSize="12" FontWeight="Medium"
-                               FontFamily="Montserrat" Margin="0,15,0,0"/>
-
-                    <TextBox x:Name="txtEmail" FontSize="13" FontWeight="Medium"
-                             FontFamily="Montserrat" Foreground="black"
-                             CaretBrush="LightGray" BorderBrush="DarkGray"
-                             BorderThickness="0,0,0,2" Height="28"
-                             VerticalContentAlignment="Center" Margin="0,5,0,0"
-                             Padding="20,0,0,0"/>
-
-                    <Button x:Name="btnSignUp"
+                    <Button x:Name="btnLogin"
                             BorderThickness="0"
-                            Content="SIGN UP"
+                            Content="LOG IN"
                             Foreground="White"
                             FontSize="12"
                             FontFamily="Montserrat"
                             Cursor="Hand"
                             Margin="0,50,0,0"
-                            Click="btnSignUp_Click">
+                            Click="btnLogin_Click">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Background" Value="#FFA310"/>
@@ -171,22 +156,19 @@
                             <ControlTemplate TargetType="Button">
                                 <Border Width="150" Height="40" CornerRadius="20"
                                         Background="{TemplateBinding Background}">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                      HorizontalAlignment="Center"/>
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Border>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
 
-                    <!-- Navigation to Login -->
+                    <!-- Navigation to SignUp -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
-                        <TextBlock Text="Already have an account?" Foreground="DarkGray" FontSize="12" FontWeight="Medium" FontFamily="Montserrat"/>
-                        <TextBlock Text="Log In" Foreground="#FFA310" FontSize="12" FontWeight="Medium" FontFamily="Montserrat" Cursor="Hand" Margin="8,0,0,0" MouseLeftButtonDown="GoToLogin"/>
+                        <TextBlock Text="Don't have an account?" Foreground="DarkGray" FontSize="12" FontWeight="Medium" FontFamily="Montserrat"/>
+                        <TextBlock Text="Sign Up" Foreground="#FFA310" FontSize="12" FontWeight="Medium" FontFamily="Montserrat" Cursor="Hand" Margin="8,0,0,0" MouseLeftButtonDown="GoToSignUp"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
-
         </Border>
     </Border>
-
 </UserControl>
