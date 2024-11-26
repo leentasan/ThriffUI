@@ -2,10 +2,12 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using ThriffSignUp.Model;
+using System.Configuration;
 
 namespace ThriffSignUp.View
 {
@@ -16,12 +18,16 @@ namespace ThriffSignUp.View
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private readonly string connString = "Host=localhost;Port=5432;Database=thriff;Username=postgres;Password=della2908";
+        private readonly string connString;
 
         public bHome()
         {
             InitializeComponent();
             DataContext = this;
+
+            connString = ConfigurationManager.ConnectionStrings["PostgresConnection"].ConnectionString;
+
+
             LoadProducts();
         }
 
@@ -29,10 +35,9 @@ namespace ThriffSignUp.View
         {
             if (CategoryFilter.SelectedItem is string selectedCategory)
             {
-                // Debugging: Tampilkan nilai kategori yang dipilih
                 Console.WriteLine($"Selected Category: {selectedCategory}");
 
-                Products.Clear(); // Bersihkan produk sebelum menambahkan
+                Products.Clear();
 
                 if (selectedCategory == "All")
                 {
@@ -79,7 +84,8 @@ namespace ThriffSignUp.View
                                     ImagePath = reader.IsDBNull(3) || string.IsNullOrEmpty(reader.GetString(3))
                                                 ? "/Images/ILUSTRASI.png"
                                                 : reader.GetString(3),
-                                    Price = (double)reader.GetDecimal(4)
+                                    Price = reader.GetDouble(4)
+
                                 };
 
                                 Products.Add(product);
@@ -89,14 +95,12 @@ namespace ThriffSignUp.View
                     }
                 }
 
-                // Isi kategori unik ke CategoryFilter
                 var uniqueCategories = _originalProducts
                     .Select(p => p.Category)
                     .Distinct()
                     .ToList();
                 uniqueCategories.Insert(0, "All");
 
-                // Bersihkan item sebelumnya sebelum menetapkan ItemsSource
                 CategoryFilter.Items.Clear();
                 CategoryFilter.ItemsSource = uniqueCategories;
             }
@@ -114,7 +118,7 @@ namespace ThriffSignUp.View
             {
                 var detailView = new DetailProduct
                 {
-                    ProductId = selectedProduct.ProductId // Set ProductId
+                    ProductId = selectedProduct.ProductId
                 };
 
                 var parent = this.Parent as ContentControl;
@@ -136,7 +140,6 @@ namespace ThriffSignUp.View
             {
                 string searchText = searchBox.Text.ToLower();
 
-                // Jika teks pencarian kosong, tampilkan semua produk
                 if (string.IsNullOrWhiteSpace(searchText))
                 {
                     Products.Clear();
@@ -147,7 +150,6 @@ namespace ThriffSignUp.View
                     return;
                 }
 
-                // Filter produk berdasarkan teks pencarian
                 Products.Clear();
                 foreach (var product in _originalProducts.Where(p => p.Name.ToLower().Contains(searchText)))
                 {

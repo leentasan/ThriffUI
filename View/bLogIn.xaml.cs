@@ -3,18 +3,20 @@ using System.Windows;
 using System.Windows.Controls;
 using Npgsql;
 using BCrypt.Net;
+using System.Configuration;
+using ThriffSignUp.Model;
 
 namespace ThriffSignUp.View
 {
     public partial class bLogIn : UserControl
     {
         private readonly NpgsqlConnection conn;
-        private readonly string connstring = "Host=localhost;Port=5432;Username=postgres;Password=della2908;Database=thriff";
-
+        private readonly string connString;
         public bLogIn()
         {
             InitializeComponent();
-            conn = new NpgsqlConnection(connstring);
+            connString = ConfigurationManager.ConnectionStrings["PostgresConnection"].ConnectionString;
+            conn = new NpgsqlConnection(connString);
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -22,7 +24,6 @@ namespace ThriffSignUp.View
             string username = txtUser.Text;
             string password = txtPass.Password;
 
-            // Validasi input kosong
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
                 MessageBox.Show("Please fill all fields.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -32,35 +33,41 @@ namespace ThriffSignUp.View
             try
             {
                 conn.Open();
-                string query = "SELECT password FROM buyer WHERE username = @username";
+                string query = "SELECT buyerid, password, address FROM buyer WHERE username = @username";
 
                 using (var cmd = new NpgsqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("username", username);
 
-                    // Ambil hash password dari database
-                    object result = cmd.ExecuteScalar();
-                    if (result != null)
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        string hashedPassword = result.ToString();
-
-                        // Verifikasi password yang diinput dengan hash dari database
-                        if (BCrypt.Net.BCrypt.Verify(password, hashedPassword))
+                        if (reader.Read())
                         {
-                            MessageBox.Show("Login Successful", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                            string hashedPassword = reader["password"].ToString();
 
-                            // Navigasi ke HomeView melalui MainWindow
-                            var mainWindow = Application.Current.MainWindow as MainWindow;
-                            mainWindow?.NavigateToHomeBuyer(); // Pastikan Anda memiliki metode NavigateToHome() di MainWindow
+                            if (BCrypt.Net.BCrypt.Verify(password, hashedPassword))
+                            {
+                                int buyerId = Convert.ToInt32(reader["buyerid"]);
+                                Session.BuyerId = buyerId;
+
+                                Session.BuyerAddress = reader["address"]?.ToString() ?? string.Empty;
+                                Console.WriteLine($"Logged-in BuyerId: {Session.BuyerId}");
+                                Console.WriteLine($"Buyer Address: {Session.BuyerAddress}");
+
+                                MessageBox.Show("Login Successful", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                                var mainWindow = Application.Current.MainWindow as MainWindow;
+                                mainWindow?.NavigateToHomeBuyer();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Login Failed. Incorrect password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
                         }
                         else
                         {
-                            MessageBox.Show("Login Failed. Incorrect password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("Login Failed. Username not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Login Failed. Username not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
             }
@@ -73,6 +80,8 @@ namespace ThriffSignUp.View
                 conn.Close();
             }
         }
+
+
 
 
         private void GoToSignUp(object sender, RoutedEventArgs e)

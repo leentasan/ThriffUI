@@ -1,74 +1,94 @@
 ﻿<UserControl x:Class="ThriffSignUp.View.bCheckout"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ThriffSignUp.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <!-- Outer Border with rounded corners -->
-    <Border CornerRadius="12" Background="White" BorderThickness="2"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="550" d:DesignWidth="800">
+
+	<!-- Outer Border with rounded corners -->
+	<Border CornerRadius="12" Background="White" BorderThickness="2"
             BorderBrush="{DynamicResource BorderBrush}" Padding="10">
 
-        <!-- Inner Border for gradient border style -->
-        <Border CornerRadius="10" BorderThickness="2" Opacity="0.95" Margin="-9,-9,-9,-9">
-            <Border.BorderBrush>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#FFFFFF" Offset="0"/>
-                    <GradientStop Color="#558984" Offset="0.75"/>
-                    <GradientStop Color="#FFA310" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.BorderBrush>
+		<!-- Inner StackPanel for Layout -->
+		<StackPanel Margin="20">
+			<!-- Header -->
+			<TextBlock Text="Checkout" FontSize="24" FontWeight="Bold" Foreground="Black"
+                       HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
-            <StackPanel Margin="20">
-                <!-- Header -->
-                <TextBlock Text="Checkout" FontSize="24" FontWeight="Bold" Foreground="Black" 
-                           HorizontalAlignment="Center" Margin="0,0,0,20"/>
+			<!-- Shipping Address -->
+			<TextBlock Text="Shipping Address" FontSize="16" FontWeight="SemiBold" Foreground="Black" Margin="0,5,0,5"/>
+			<TextBox x:Name="addressTextBox" Margin="0,5,0,10" Height="25" TextWrapping="Wrap" Background="#F0F0F0"
+                     IsReadOnly="True" />
 
-                <!-- Address and Payment Details -->
-                <TextBlock Text="Shipping Address" FontSize="16" FontWeight="SemiBold" Foreground="Black"/>
-                <TextBox x:Name="addressBox" Margin="0,10,0,20" Height="60" TextWrapping="Wrap" Background="#F0F0F0"/>
+			<!-- Seller Address -->
+			<TextBlock Text="Seller Address" FontSize="16" FontWeight="SemiBold" Foreground="Black" Margin="0,5,0,5"/>
+			<TextBox x:Name="sellerAddressBox" Margin="0,5,0,10" Height="25" TextWrapping="Wrap" Background="#F0F0F0"
+                     IsReadOnly="True"/>
 
-                <TextBlock Text="Payment Method" FontSize="16" FontWeight="SemiBold" Foreground="Black"/>
-                <ComboBox x:Name="paymentMethod" Margin="0,10,0,20" Background="#F0F0F0">
-                    <ComboBoxItem Content="COD"/>
-                    <ComboBoxItem Content="Transfer Bank"/>
-                    <ComboBoxItem Content="E-wallet"/>
-                </ComboBox>
+			<!-- Shipping Method -->
+			<TextBlock Text="Shipping Method" FontSize="16" FontWeight="SemiBold" Foreground="Black" Margin="0,5,0,5"/>
+			<ComboBox x:Name="shippingMethodComboBox"
+                DisplayMemberPath="Text"
+                SelectedValuePath="Value"
+                Background="#F0F0F0"
+                Foreground="Black"/>
 
-                <!-- Order Summary -->
-                <TextBlock Text="Order Summary" FontSize="16" FontWeight="SemiBold" Foreground="Black" Margin="0,0,0,10"/>
-                <StackPanel Margin="0,10,0,20">
-                    <TextBlock Text="Total Price" FontSize="14" FontWeight="Bold" Foreground="#FFA310"/>
-                    <TextBlock x:Name="summaryTotalPrice" Text="$0.00" FontSize="16" FontWeight="Bold" Foreground="Black"/>
-                </StackPanel>
 
-                <!-- Confirm Purchase Button -->
-                <Button Content="Confirm Purchase" Width="200" Height="40" Background="#FFA310"
-                        Foreground="White" BorderThickness="0" HorizontalAlignment="Center" Cursor="Hand" 
+
+			<!-- Payment Method -->
+			<TextBlock Text="Payment Method" FontSize="16" FontWeight="SemiBold" Foreground="Black" Margin="0,5,0,5"/>
+			<ComboBox x:Name="paymentMethod" Margin="0,5,0,10" Background="#F0F0F0">
+				<ComboBoxItem Content="COD"/>
+				<ComboBoxItem Content="Transfer Bank"/>
+				<ComboBoxItem Content="E-wallet"/>
+			</ComboBox>
+
+			<!-- Order Summary -->
+			<TextBlock Text="Order Summary" FontSize="16" FontWeight="SemiBold" Foreground="Black" Margin="0,5,0,5"/>
+			<StackPanel Margin="0,5,0,10">
+				<TextBlock Text="Total Price" FontSize="14" FontWeight="Bold" Foreground="#FFA310"/>
+				<TextBlock x:Name="summaryTotalPrice" Text="$0.00" FontSize="16" FontWeight="Bold" Foreground="Black"/>
+			</StackPanel>
+
+			<!-- Buttons -->
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+				<Button Content="Cancel" Width="150" Height="40" Background="#E0E0E0"
+                        Foreground="Black" BorderThickness="0" HorizontalAlignment="Center" Cursor="Hand"
+                        Click="btnCancel_Click">
+					<Button.Style>
+						<Style TargetType="Button">
+							<Setter Property="Template">
+								<Setter.Value>
+									<ControlTemplate TargetType="Button">
+										<Border CornerRadius="20" Background="{TemplateBinding Background}">
+											<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+										</Border>
+									</ControlTemplate>
+								</Setter.Value>
+							</Setter>
+						</Style>
+					</Button.Style>
+				</Button>
+
+				<Button Content="Confirm Purchase" Width="200" Height="40" Background="#FFA310"
+                        Foreground="White" BorderThickness="0" HorizontalAlignment="Center" Cursor="Hand"
                         Click="ConfirmPurchase_Click">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border CornerRadius="20" Background="{TemplateBinding Background}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#28AEED"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
-            </StackPanel>
-        </Border>
-    </Border>
+					<Button.Style>
+						<Style TargetType="Button">
+							<Setter Property="Template">
+								<Setter.Value>
+									<ControlTemplate TargetType="Button">
+										<Border CornerRadius="20" Background="{TemplateBinding Background}">
+											<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+										</Border>
+									</ControlTemplate>
+								</Setter.Value>
+							</Setter>
+						</Style>
+					</Button.Style>
+				</Button>
+			</StackPanel>
+		</StackPanel>
+	</Border>
 </UserControl>
-
-
