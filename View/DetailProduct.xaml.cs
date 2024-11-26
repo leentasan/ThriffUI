@@ -16,7 +16,7 @@ namespace ThriffSignUp.View
         public DetailProduct()
         {
             InitializeComponent();
-            DataContext = this; // Set DataContext untuk binding
+            DataContext = this;
         }
 
 
@@ -77,8 +77,6 @@ namespace ThriffSignUp.View
             }
         }
 
-
-
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -89,38 +87,49 @@ namespace ThriffSignUp.View
                 {
                     conn.Open();
 
-                    // Cek apakah produk sudah ada di cart
-                    string checkQuery = "SELECT quantity FROM cart WHERE productid = @ProductId";
+                    int buyerId = Session.BuyerId;
+                    if (buyerId <= 0)
+                    {
+                        MessageBox.Show("Invalid BuyerId. Please log in again.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    string validateBuyerQuery = "SELECT COUNT(*) FROM buyer WHERE buyerid = @BuyerId";
+                    using (var validateCmd = new Npgsql.NpgsqlCommand(validateBuyerQuery, conn))
+                    {
+                        validateCmd.Parameters.AddWithValue("BuyerId", buyerId);
+                        var buyerExists = (long)validateCmd.ExecuteScalar();
+
+                        if (buyerExists == 0)
+                        {
+                            MessageBox.Show("Invalid BuyerId. Please log in again.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                    }
+
+                    string checkQuery = "SELECT 1 FROM cart WHERE productid = @ProductId AND buyerid = @BuyerId";
                     using (var cmd = new Npgsql.NpgsqlCommand(checkQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("ProductId", ProductId);
+                        cmd.Parameters.AddWithValue("BuyerId", buyerId);
 
                         var result = cmd.ExecuteScalar();
                         if (result != null)
                         {
-                            // Jika sudah ada, update quantity
-                            int currentQuantity = Convert.ToInt32(result);
-                            string updateQuery = "UPDATE cart SET quantity = @Quantity WHERE productid = @ProductId";
-                            using (var updateCmd = new Npgsql.NpgsqlCommand(updateQuery, conn))
-                            {
-                                updateCmd.Parameters.AddWithValue("Quantity", currentQuantity + 1);
-                                updateCmd.Parameters.AddWithValue("ProductId", ProductId);
-                                updateCmd.ExecuteNonQuery();
-                            }
+                            MessageBox.Show("Product is already in the cart!");
                         }
                         else
                         {
-                            // Jika belum ada, tambahkan produk ke cart
-                            string insertQuery = "INSERT INTO cart (productid, quantity) VALUES (@ProductId, @Quantity)";
+                            string insertQuery = "INSERT INTO cart (productid, buyerid) VALUES (@ProductId, @BuyerId)";
                             using (var insertCmd = new Npgsql.NpgsqlCommand(insertQuery, conn))
                             {
                                 insertCmd.Parameters.AddWithValue("ProductId", ProductId);
-                                insertCmd.Parameters.AddWithValue("Quantity", 1);
+                                insertCmd.Parameters.AddWithValue("BuyerId", buyerId);
                                 insertCmd.ExecuteNonQuery();
                             }
-                        }
 
-                        MessageBox.Show("Product added to cart!");
+                            MessageBox.Show("Product added to cart!");
+                        }
                     }
                 }
             }
@@ -129,6 +138,23 @@ namespace ThriffSignUp.View
                 MessageBox.Show($"Error adding product to cart: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void ViewCart_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                if (mainWindow != null)
+                {
+                    mainWindow.Content = new bCart();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error navigating to Cart View: {ex.Message}", "Navigation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
 
 
     }
